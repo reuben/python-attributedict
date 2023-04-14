@@ -5,7 +5,6 @@
 
 import os
 import setuptools
-import setupextras
 
 # DISABLED/BUG: this line fails when `pip install attributedict` but works `pip install .`
 # from attributedict import __version__
@@ -34,10 +33,13 @@ keywords = [
     'hashmap',
 ]
 
-packages = setupextras.get_packages()
-data_files = setupextras.get_data_files(['*.*'], os.path.join(name, 'tests', '__fixtures__'))
-requirements = setupextras.get_requirements()
-readme = setupextras.get_readme()
+packages = setuptools.find_packages(".")
+requirements = [
+    "rootpath @ git+https://github.com/reuben/python-rootpath.git@ced47237c25d39868d3ceb91af1f48b702469c99#egg=rootpath",
+    "inspecta >= 0.1.3",
+]
+with open("README.md") as fin:
+    readme = ''.join(fin.readlines())
 
 config = {
     'name': name,
@@ -83,7 +85,6 @@ config = {
             '*.*',
         ],
     },
-    'data_files': data_files,
     'include_package_data': True,
     'zip_safe': True,
 
